@@ -176,9 +176,10 @@ class Machine{
   fixMachine(){
     this.needs_reboot = true;
   }
-  reboot(cb){
-    this.wear_and_tear_count -= 10;
-    this.needs_reboot = false;
-    cb()
+  reboot(){
+    return function(){
+      this.wear_and_tear_count -= 10;
+      this.needs_reboot = false;
+    }()
   }
 }
