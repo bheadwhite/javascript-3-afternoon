@@ -73,8 +73,8 @@ class Manager{
   hire(newEmp){
     this.reports.push(newEmp);
   }
-  fire(newEmp){
-    this.reports.splice(this.reports.indexOf(newEmp), 1);
+  fire(i){
+    this.reports.splice(i, 1);
   }
 }
 var bryan = new Manager('bryan', 'smith', 'bry@gmail.com', 20)
@@ -115,25 +115,23 @@ class ProgressiveManager{
   }
   hire(newEmp){
     this.reports.push(newEmp);
-    this.bonus++
-    // ??? directions dont say where to add count? to bonus?
     this.updateTitle();
   }
-  fire(newEmp){
-    this.reports.splice(this.reports.indexOf(newEmp), 1);
+  fire(i){
+    this.reports.splice(i, 1);
     this.bonus += 100;
     this.updateTitle()
   }
   updateTitle(){
-    if(this.bonus>0 && this.bonus<=3){
+    if(this.reports.length>0 && this.reports.length<=3){
       this.title = 'Barely Manager'
-    } else if (this.bonus>3 && this.bonus<=10) {
+    } else if (this.reports.length>3 && this.reports.length<=10) {
       this.title = 'Mostly Manager'
-    } else if (this.bonus>10 && this.bonus<=50) {
+    } else if (this.reports.length>10 && this.reports.length<=50) {
       this.title = 'Manager'
-    } else if (this.bonus>50 && this.bonus<=100) {
+    } else if (this.reports.length>50 && this.reports.length<=100) {
       this.title = 'Manager Plus'
-    } else if (this.bonus>100) {
+    } else if (this.reports.length>100) {
       this.title = 'Bestest Manager'
     }
   }
@@ -165,4 +163,22 @@ var brent = new ProgressiveManager('brent', 'w', 'b@gmail.com', 30)
 
 //Code Here
 
-
+class Machine{
+  constructor(){
+    this.widgets_made_count = 0;
+    this.wear_and_tear_count = 0;
+    this.needs_reboot = false;
+  }
+  makeWidgets(num){
+    this.widgets_made_count += num;
+    this.wear_and_tear_count = this.widgets_made_count/50
+  }
+  fixMachine(){
+    this.needs_reboot = true;
+  }
+  reboot(cb){
+    this.wear_and_tear_count -= 10;
+    this.needs_reboot = false;
+    cb()
+  }
+}
